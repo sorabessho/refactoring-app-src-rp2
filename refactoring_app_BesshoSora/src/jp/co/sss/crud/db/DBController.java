@@ -10,7 +10,11 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
+import jp.co.sss.crud.dto.Department;
+import jp.co.sss.crud.dto.Employee;
 import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
 
@@ -39,10 +43,8 @@ public class DBController {
 		try {
 			// DBに接続
 			connection = DBManager.getConnection();
-
 			// ステートメントを作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_ALL_SELECT);
-
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
@@ -52,31 +54,26 @@ public class DBController {
 				return;
 			}
 
-			// レコードを出力
-			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
+			//検索結果をDTOListに入れる
+			List<Employee> employees = new ArrayList<Employee>();
 			while (resultSet.next()) {
-				System.out.print(resultSet.getString("emp_id") + "\t");
-				System.out.print(resultSet.getString("emp_name") + "\t");
-
-				int gender = Integer.parseInt(resultSet.getString("gender"));
-				if (gender == 0) {
-					System.out.print("回答なし" + "\t");
-				} else if (gender == 1) {
-					System.out.print("男性" + "\t");
-
-				} else if (gender == 2) {
-					System.out.print("女性" + "\t");
-
-				} else if (gender == 9) {
-					System.out.print("その他" + "\t");
-
-				}
-
-				System.out.print(resultSet.getString("birthday") + "\t");
-				System.out.println(resultSet.getString("dept_name"));
+				Employee employee = new Employee();
+				Department department = new Department();
+				employee.setEmpId(resultSet.getInt("emp_id"));
+				employee.setEmpName(resultSet.getString("emp_name"));
+				employee.setGender(resultSet.getInt("gender"));
+				employee.setBirthday(resultSet.getString("birthday"));
+				employee.setDepartment(department);
+				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
+				employees.add(employee);
 			}
 
-			System.out.println("");
+			//従業員のコンソール出力
+			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
+			for (Employee employee : employees) {
+				System.out.println(employee);
+			}
+
 		} finally {
 			// ResultSetをクローズ
 			DBManager.close(resultSet);
@@ -235,7 +232,7 @@ public class DBController {
 					System.out.println("営業部");
 				} else if (deptId2 == 2) {
 					System.out.println("経理部");
-				} else if (gender == 3) {
+				} else if (deptId2 == 3) {
 					System.out.println("総務部");
 
 				}
