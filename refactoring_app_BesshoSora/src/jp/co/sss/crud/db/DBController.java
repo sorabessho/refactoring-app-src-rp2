@@ -11,6 +11,7 @@ import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
 
 /**
@@ -47,12 +48,12 @@ public class DBController {
 
 			//resultSetの結果Setがない場合はfalse
 			if (!resultSet.isBeforeFirst()) {
-				System.out.println("該当者はいませんでした");
+				System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
 				return;
 			}
 
 			// レコードを出力
-			System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
+			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
 			while (resultSet.next()) {
 				System.out.print(resultSet.getString("emp_id") + "\t");
 				System.out.print(resultSet.getString("emp_name") + "\t");
@@ -120,11 +121,11 @@ public class DBController {
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 			if (!resultSet.isBeforeFirst()) {
-				System.out.println("該当者はいませんでした");
+				System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
 				return;
 			}
 
-			System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
+			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
 			while (resultSet.next()) {
 				System.out.print(resultSet.getString("emp_id"));
 				System.out.print("\t");
@@ -197,11 +198,11 @@ public class DBController {
 			resultSet = preparedStatement.executeQuery();
 
 			if (!resultSet.isBeforeFirst()) {
-				System.out.println("該当者はいませんでした");
+				System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
 				return;
 			}
 
-			System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
+			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
 			while (resultSet.next()) {
 				System.out.print(resultSet.getString("emp_id"));
 				System.out.print("\t");
@@ -285,9 +286,11 @@ public class DBController {
 			preparedStatement.executeUpdate();
 
 			// 登録完了メッセージを出力
-			System.out.println("社員情報を登録しました");
+			System.out.println(ConstantMsg.NOTICE_INSERT_COMPLETE);
 		} finally {
+			// Statementをクローズ
 			DBManager.close(preparedStatement);
+			// DBとの接続を切断
 			DBManager.close(connection);
 		}
 	}
@@ -301,7 +304,7 @@ public class DBController {
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
 	 * @throws ParseException 
 	 */
-	public static void updateEmpByEmpId(String empId)
+	public static void updateByEmpId(String empId)
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -337,6 +340,7 @@ public class DBController {
 
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
+			System.out.println(ConstantMsg.NOTICE_UPDATE_BY_EMP_ID_COMPLETE);
 
 		} finally {
 			// クローズ処理
@@ -372,22 +376,20 @@ public class DBController {
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
 
-			System.out.println("社員情報を削除しました");
+			System.out.println(ConstantMsg.NOTICE_DELETE_COMPLETE);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
-		}
-
-		finally {
-			// Statementをクローズ
+		} finally {
 			try {
+				// クローズ処理
 				DBManager.close(preparedStatement);
+				// DBとの接続を切断
 				DBManager.close(connection);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			// DBとの接続を切断
 		}
 	}
 }
