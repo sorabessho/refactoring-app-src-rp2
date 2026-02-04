@@ -8,6 +8,7 @@ import java.text.ParseException;
 
 import jp.co.sss.crud.db.DBController;
 import jp.co.sss.crud.util.ConstantMsg;
+import jp.co.sss.crud.util.ConstantValue;
 
 /**
  * 社員情報管理システム開始クラス 社員情報管理システムはこのクラスから始まる。<br/>
@@ -39,13 +40,13 @@ public class MainSystem {
 		do {
 			// メニューの表示
 			System.out.println(ConstantMsg.MENU_TITLE);
-			System.out.println(ConstantMsg.MENU_FIND_ALL);
-			System.out.println(ConstantMsg.MENU_FIND_BY_EMP_NAME);
-			System.out.println(ConstantMsg.MENU_FIND_BY_DEPT_ID);
-			System.out.println(ConstantMsg.MENU_INSERT_EMP);
-			System.out.println(ConstantMsg.MENU_UPDATE_EMP_BY_EMP_ID);
-			System.out.println(ConstantMsg.MENU_DELETE_BY_EMP_ID);
-			System.out.println(ConstantMsg.MENU_FINISH);
+			System.out.println(ConstantValue.MENU_NUMBER_1 + ConstantMsg.MENU_FIND_ALL);
+			System.out.println(ConstantValue.MENU_NUMBER_2 + ConstantMsg.MENU_FIND_BY_EMP_NAME);
+			System.out.println(ConstantValue.MENU_NUMBER_3 + ConstantMsg.MENU_FIND_BY_DEPT_ID);
+			System.out.println(ConstantValue.MENU_NUMBER_4 + ConstantMsg.MENU_INSERT_EMP);
+			System.out.println(ConstantValue.MENU_NUMBER_5 + ConstantMsg.MENU_UPDATE_EMP_BY_EMP_ID);
+			System.out.println(ConstantValue.MENU_NUMBER_6 + ConstantMsg.MENU_DELETE_BY_EMP_ID);
+			System.out.println(ConstantValue.MENU_NUMBER_7 + ConstantMsg.MENU_FINISH);
 			System.out.print(ConstantMsg.MENU_INPUT_NUMBER);
 
 			// メニュー番号の入力
@@ -53,12 +54,12 @@ public class MainSystem {
 
 			// 機能の呼出
 			switch (menuNo) {
-			case 1:
+			case ConstantValue.MENU_NUMBER_1:
 				// 全件表示機能の呼出
 				DBController.findAll();
 				break;
 
-			case 2:
+			case ConstantValue.MENU_NUMBER_2:
 				// 社員名検索
 				System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 
@@ -66,7 +67,7 @@ public class MainSystem {
 				DBController.findByEmpId();
 				break;
 
-			case 3:
+			case ConstantValue.MENU_NUMBER_3:
 				// 検索する部署IDを入力
 				System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
 				deptId = br.readLine();
@@ -75,7 +76,7 @@ public class MainSystem {
 				DBController.findByDeptId(deptId);
 				break;
 
-			case 4:
+			case ConstantValue.MENU_NUMBER_4:
 				// 登録する値を入力
 				System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 				empName = br.readLine();
@@ -90,7 +91,7 @@ public class MainSystem {
 				DBController.insertEmp(empName, gender, birthday, deptId);
 				break;
 
-			case 5:
+			case ConstantValue.MENU_NUMBER_5:
 				// 更新する社員IDを入力
 				System.out.print(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID);
 
@@ -104,7 +105,7 @@ public class MainSystem {
 
 				break;
 
-			case 6:
+			case ConstantValue.MENU_NUMBER_6:
 				// 削除する社員IDを入力
 				System.out.print(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
 
@@ -113,7 +114,7 @@ public class MainSystem {
 				break;
 
 			}
-		} while (menuNo != 7);
+		} while (menuNo != ConstantValue.MENU_NUMBER_7);
 		System.out.println(ConstantMsg.NOTICE_FINISH);
 	}
 }

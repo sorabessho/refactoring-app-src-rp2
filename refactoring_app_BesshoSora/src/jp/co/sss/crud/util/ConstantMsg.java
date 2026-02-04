@@ -1,5 +1,10 @@
 package jp.co.sss.crud.util;
 
+/**
+ * 文章（文字列）を定数化するクラス
+ * 
+ * @author 別所大空-Task.2
+ */
 public final class ConstantMsg {
 
 	/**インスタンス化禁止*/
@@ -9,19 +14,19 @@ public final class ConstantMsg {
 	/**メニュータイトル*/
 	public static final String MENU_TITLE = "=== 社員管理システム ===";
 	/**メニュー（全件表示）*/
-	public static final String MENU_FIND_ALL = "1.全件表示";
+	public static final String MENU_FIND_ALL = ".全件表示";
 	/**メニュー（社員名検索）*/
-	public static final String MENU_FIND_BY_EMP_NAME = "2.社員名検索";
+	public static final String MENU_FIND_BY_EMP_NAME = ".社員名検索";
 	/**メニュー（部署ID検索）*/
-	public static final String MENU_FIND_BY_DEPT_ID = "3.部署ID検索";
+	public static final String MENU_FIND_BY_DEPT_ID = ".部署ID検索";
 	/**メニュー（新規登録）*/
-	public static final String MENU_INSERT_EMP = "4.新規登録";
+	public static final String MENU_INSERT_EMP = ".新規登録";
 	/**メニュー（更新）*/
-	public static final String MENU_UPDATE_EMP_BY_EMP_ID = "5.更新";
+	public static final String MENU_UPDATE_EMP_BY_EMP_ID = ".更新";
 	/**メニュー（削除）*/
-	public static final String MENU_DELETE_BY_EMP_ID = "6.削除";
+	public static final String MENU_DELETE_BY_EMP_ID = ".削除";
 	/**メニュー（終了）*/
-	public static final String MENU_FINISH = "7.終了";
+	public static final String MENU_FINISH = ".終了";
 	/**メニュー案内*/
 	public static final String MENU_INPUT_NUMBER = "メニュー番号を入力してください：";
 
