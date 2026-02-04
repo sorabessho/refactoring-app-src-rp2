@@ -101,8 +101,6 @@ public class MainSystem {
 
 				// 更新機能の呼出
 				DBController.updateByEmpId(empId);
-				System.out.println(ConstantMsg.NOTICE_UPDATE_BY_EMP_ID_COMPLETE);
-
 				break;
 
 			case ConstantValue.MENU_NUMBER_6:

@@ -47,6 +47,15 @@ public final class ConstantMsg {
 
 	/**更新完了通知*/
 	public static final String NOTICE_UPDATE_BY_EMP_ID_COMPLETE = "社員情報を更新しました";
+	/**登録完了通知*/
+	public static final String NOTICE_INSERT_COMPLETE = "社員情報を登録しました";
+	/**削除完了通知*/
+	public static final String NOTICE_DELETE_COMPLETE = "社員情報を削除しました";
 	/**システム終了通知*/
 	public static final String NOTICE_FINISH = "システムを終了します。";
+	/**検索結果が0だった場合の通知*/
+	public static final String NOTICE_FIND_COMPLETE_ANYONE = "該当者はいませんでした";
+
+	/**検索結果の目次*/
+	public static final String INDEX_FIND_RESULT = "社員ID\t社員名\t性別\t生年月日\t部署名";
 }
