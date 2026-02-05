@@ -90,7 +90,9 @@ public class DBController {
 	 */
 	public static void findByEmpId() throws ClassNotFoundException, SQLException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		// 検索ワード
+		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 		String searchWord = br.readLine();
 
 		Connection connection = null;
@@ -153,7 +155,9 @@ public class DBController {
 	 */
 	public static void findByDeptId() throws ClassNotFoundException, SQLException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		// 検索ワード
+
+		// 検索する部署IDを入力
+		System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
 		String searchDeptId = br.readLine();
 
 		Connection connection = null;
@@ -221,8 +225,9 @@ public class DBController {
 	 */
 	public static void insertEmp()
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
-		// 登録する値を入力 修正-別所
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		// 登録する値を入力 修正-別所
 		Employee employee = new Employee();
 		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 		employee.setEmpName(br.readLine());
@@ -270,9 +275,10 @@ public class DBController {
 	 */
 	public static void updateByEmpId()
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
 			// データベースに接続
@@ -325,36 +331,33 @@ public class DBController {
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 * @throws IOException            入力処理でエラーが発生した場合に送出
 	 */
-	public static void deleteByEmpId() {
+	public static void deleteByEmpId() throws IOException, ClassNotFoundException, SQLException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		// 削除する社員IDを入力
+		System.out.print(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
+		int empId = Integer.parseInt(br.readLine());
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
 			// データベースに接続
 			connection = DBManager.getConnection();
-			String empId = br.readLine();
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
 			// 社員IDをバインド
-			preparedStatement.setInt(1, Integer.parseInt(empId));
+			preparedStatement.setInt(1, empId);
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
 
 			System.out.println(ConstantMsg.NOTICE_DELETE_COMPLETE);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-
 		} finally {
-			try {
-				// クローズ処理
-				DBManager.close(preparedStatement);
-				// DBとの接続を切断
-				DBManager.close(connection);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			// クローズ処理
+			DBManager.close(preparedStatement);
+			// DBとの接続を切断
+			DBManager.close(connection);
 		}
 	}
 }

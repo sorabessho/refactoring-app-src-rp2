@@ -48,41 +48,38 @@ public class MainSystem {
 
 			// 機能の呼出
 			switch (menuNo) {
+
+			// 全件表示機能の呼出
 			case ConstantValue.MENU_NUMBER_1:
-				// 全件表示機能の呼出
 				DBController.findAll();
 				break;
 
+			// 社員名検索
 			case ConstantValue.MENU_NUMBER_2:
-				// 社員名検索
-				System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
-
 				// 検索機能の呼出
 				DBController.findByEmpId();
 				break;
 
+			//部署ID検索
 			case ConstantValue.MENU_NUMBER_3:
-				// 検索する部署IDを入力
-				System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
-
 				// 検索機能の呼出
 				DBController.findByDeptId();
 				break;
 
+			//社員登録
 			case ConstantValue.MENU_NUMBER_4:
 				// 登録機能の呼出
 				DBController.insertEmp();
 				break;
 
+			//社員情報更新
 			case ConstantValue.MENU_NUMBER_5:
 				// 更新機能の呼出
 				DBController.updateByEmpId();
 				break;
 
+			//社員削除
 			case ConstantValue.MENU_NUMBER_6:
-				// 削除する社員IDを入力
-				System.out.print(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
-
 				// 削除機能の呼出
 				DBController.deleteByEmpId();
 				break;
