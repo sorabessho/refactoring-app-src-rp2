@@ -48,13 +48,13 @@ public class DBController {
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
-			//resultSetの結果Setがない場合はfalse
+			//nullチェック
 			if (!resultSet.isBeforeFirst()) {
 				System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
 				return;
 			}
 
-			//検索結果をDTOListに入れる
+			//検索結果をDTOListに入れる 修正-別所
 			List<Employee> employees = new ArrayList<Employee>();
 			while (resultSet.next()) {
 				Employee employee = new Employee();
@@ -68,8 +68,8 @@ public class DBController {
 				employees.add(employee);
 			}
 
-			//従業員のコンソール出力
-			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
+			//従業員のコンソール出力 修正-別所
+			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
 			for (Employee employee : employees) {
 				System.out.println(employee);
 			}
@@ -104,25 +104,23 @@ public class DBController {
 		try {
 			// DBに接続
 			connection = DBManager.getConnection();
-
 			// SQL文を準備
 			StringBuffer sql = new StringBuffer(ConstantSQL.SQL_SELECT_BASIC);
 			sql.append(ConstantSQL.SQL_SELECT_BY_EMP_NAME);
-
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(sql.toString());
-
 			// 検索条件となる値をバインド
 			preparedStatement.setString(1, "%" + searchWord + "%");
-
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
+
+			//nullチェック
 			if (!resultSet.isBeforeFirst()) {
 				System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
 				return;
 			}
 
-			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
+			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
 			while (resultSet.next()) {
 				System.out.print(resultSet.getString("emp_id"));
 				System.out.print("\t");
@@ -199,7 +197,7 @@ public class DBController {
 				return;
 			}
 
-			System.out.println(ConstantMsg.INDEX_FIND_RESULT);
+			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
 			while (resultSet.next()) {
 				System.out.print(resultSet.getString("emp_id"));
 				System.out.print("\t");
