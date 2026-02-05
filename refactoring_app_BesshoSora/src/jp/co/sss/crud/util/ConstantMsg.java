@@ -58,4 +58,17 @@ public final class ConstantMsg {
 
 	/**検索結果の目次*/
 	public static final String HEADER_FIND_RESULT = "社員ID\t社員名\t性別\t生年月日\t部署名";
+
+	/**登録時の入力（社員名）*/
+	public static final String INPUT_INSERT_EMP_NAME = "社員名：";
+
+	/**登録時の入力（性別）*/
+	public static final String INPUT_INSERT_GENDER = "性別(0:回答しない, 1:男性, 2:女性, 9:その他):";
+
+	/**登録時の入力（生年月日）*/
+	public static final String INPUT_INSERT_BIRTHDAY = "生年月日(西暦年/月/日)：";
+
+	/**登録時の入力（部署ID）*/
+	public static final String INPUT_INSERT_DEPT_ID = "部署ID(1：営業部、2：経理部、3：総務部)：";
+
 }
