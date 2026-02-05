@@ -7,6 +7,10 @@ public class Employee {
 	private String birthday;
 	private Department department;
 
+	public Employee() {
+		department = new Department();
+	}
+
 	public int getEmpId() {
 		return empId;
 	}
@@ -17,7 +21,7 @@ public class Employee {
 
 	public String getGender() {
 		//性別の文字化
-		String genderString;
+		String genderString = "";
 		if (this.gender == 0) {
 			genderString = "回答なし";
 		} else if (this.gender == 1) {
@@ -73,7 +77,7 @@ public class Employee {
 		} else if (this.gender == 9) {
 			genderString = "その他";
 		} else {
-			genderString = "不明";
+			genderString = "エラー（想定外の数字orNull）";
 		}
 
 		return empId + "\t" + empName + "\t" + genderString + "\t" + birthday + "\t" + department.getDeptName();

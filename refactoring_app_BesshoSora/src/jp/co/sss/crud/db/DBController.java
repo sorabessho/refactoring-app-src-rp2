@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.sss.crud.dto.Department;
 import jp.co.sss.crud.dto.Employee;
 import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
@@ -58,12 +57,10 @@ public class DBController {
 			List<Employee> employees = new ArrayList<Employee>();
 			while (resultSet.next()) {
 				Employee employee = new Employee();
-				Department department = new Department();
 				employee.setEmpId(resultSet.getInt("emp_id"));
 				employee.setEmpName(resultSet.getString("emp_name"));
 				employee.setGender(resultSet.getInt("gender"));
 				employee.setBirthday(resultSet.getString("birthday"));
-				employee.setDepartment(department);
 				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
 				employees.add(employee);
 			}
@@ -178,20 +175,17 @@ public class DBController {
 		try {
 			// DBに接続
 			connection = DBManager.getConnection();
-
 			// SQL文を準備
 			StringBuffer sql = new StringBuffer(ConstantSQL.SQL_SELECT_BASIC);
 			sql.append(ConstantSQL.SQL_SELECT_BY_DEPT_ID);
-
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(sql.toString());
-
 			// 検索条件となる値をバインド
 			preparedStatement.setInt(1, Integer.parseInt(deptId));
-
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
+			//nullチェック
 			if (!resultSet.isBeforeFirst()) {
 				System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
 				return;
@@ -266,17 +260,14 @@ public class DBController {
 		try {
 			// DBに接続
 			connection = DBManager.getConnection();
-
 			// ステートメントを作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
-
 			// 入力値をバインド
 			preparedStatement.setString(1, empName);
 			preparedStatement.setInt(2, Integer.parseInt(gender));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
 			preparedStatement.setInt(4, Integer.parseInt(deptId));
-
 			// SQL文を実行
 			preparedStatement.executeUpdate();
 
@@ -308,7 +299,6 @@ public class DBController {
 		try {
 			// データベースに接続
 			connection = DBManager.getConnection();
-
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
 
@@ -332,9 +322,9 @@ public class DBController {
 			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
 			preparedStatement.setInt(4, Integer.parseInt(deptId));
 			preparedStatement.setInt(5, Integer.parseInt(empId));
-
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
+
 			System.out.println(ConstantMsg.NOTICE_UPDATE_BY_EMP_ID_COMPLETE);
 
 		} finally {
@@ -361,13 +351,10 @@ public class DBController {
 			// データベースに接続
 			connection = DBManager.getConnection();
 			String empId = br.readLine();
-
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
-
 			// 社員IDをバインド
 			preparedStatement.setInt(1, Integer.parseInt(empId));
-
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
 
