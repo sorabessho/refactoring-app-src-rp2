@@ -117,37 +117,23 @@ public class DBController {
 				return;
 			}
 
-			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
+			//検索結果をDTOListに入れる 修正-別所
+			List<Employee> employees = new ArrayList<Employee>();
 			while (resultSet.next()) {
-				System.out.print(resultSet.getString("emp_id"));
-				System.out.print("\t");
-
-				System.out.print(resultSet.getString("emp_name"));
-				System.out.print("\t");
-
-				String genderString = resultSet.getString("gender");
-				int gender = Integer.parseInt(genderString);
-				if (gender == 0) {
-					System.out.print("回答なし");
-				} else if (gender == 1) {
-					System.out.print("男性");
-
-				} else if (gender == 2) {
-					System.out.print("女性");
-
-				} else if (gender == 9) {
-					System.out.print("その他");
-
-				}
-
-				System.out.print("\t");
-				System.out.print(resultSet.getString("birthday"));
-				System.out.print("\t");
-
-				System.out.println(resultSet.getString("dept_name"));
+				Employee employee = new Employee();
+				employee.setEmpId(resultSet.getInt("emp_id"));
+				employee.setEmpName(resultSet.getString("emp_name"));
+				employee.setGender(resultSet.getInt("gender"));
+				employee.setBirthday(resultSet.getString("birthday"));
+				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
+				employees.add(employee);
 			}
 
-			System.out.println("");
+			//従業員のコンソール出力 修正-別所
+			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
+			for (Employee employee : employees) {
+				System.out.println(employee);
+			}
 
 		} finally {
 			// クローズ処理
@@ -191,46 +177,24 @@ public class DBController {
 				return;
 			}
 
-			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
+			//検索結果をDTOListに入れる 修正-別所
+			List<Employee> employees = new ArrayList<Employee>();
 			while (resultSet.next()) {
-				System.out.print(resultSet.getString("emp_id"));
-				System.out.print("\t");
-
-				System.out.print(resultSet.getString("emp_name"));
-				System.out.print("\t");
-
-				String genderString = resultSet.getString("gender");
-				int gender = Integer.parseInt(genderString);
-				if (gender == 0) {
-					System.out.print("回答なし");
-				} else if (gender == 1) {
-					System.out.print("男性");
-
-				} else if (gender == 2) {
-					System.out.print("女性");
-
-				} else if (gender == 9) {
-					System.out.print("その他");
-
-				}
-
-				System.out.print("\t");
-				System.out.print(resultSet.getString("birthday"));
-				System.out.print("\t");
-
-				String deptIdString = resultSet.getString("dept_id");
-				int deptId2 = Integer.parseInt(deptIdString);
-				if (deptId2 == 1) {
-					System.out.println("営業部");
-				} else if (deptId2 == 2) {
-					System.out.println("経理部");
-				} else if (deptId2 == 3) {
-					System.out.println("総務部");
-
-				}
+				Employee employee = new Employee();
+				employee.setEmpId(resultSet.getInt("emp_id"));
+				employee.setEmpName(resultSet.getString("emp_name"));
+				employee.setGender(resultSet.getInt("gender"));
+				employee.setBirthday(resultSet.getString("birthday"));
+				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
+				employees.add(employee);
 			}
 
-			System.out.println("");
+			//従業員のコンソール出力 修正-別所
+			System.out.println(ConstantMsg.HEADER_FIND_RESULT);
+			for (Employee employee : employees) {
+				System.out.println(employee);
+			}
+
 		} finally {
 			// クローズ処理
 			DBManager.close(resultSet);
