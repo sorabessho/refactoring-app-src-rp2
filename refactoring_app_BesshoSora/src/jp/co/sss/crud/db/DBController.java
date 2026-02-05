@@ -90,7 +90,6 @@ public class DBController {
 	 */
 	public static void findByEmpId() throws ClassNotFoundException, SQLException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
 		// 検索ワード
 		String searchWord = br.readLine();
 
@@ -152,7 +151,10 @@ public class DBController {
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 * @throws IOException            入力処理でエラーが発生した場合に送出
 	 */
-	public static void findByDeptId(String deptId) throws ClassNotFoundException, SQLException, IOException {
+	public static void findByDeptId() throws ClassNotFoundException, SQLException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		// 検索ワード
+		String searchDeptId = br.readLine();
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -167,7 +169,7 @@ public class DBController {
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(sql.toString());
 			// 検索条件となる値をバインド
-			preparedStatement.setInt(1, Integer.parseInt(deptId));
+			preparedStatement.setInt(1, Integer.parseInt(searchDeptId));
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
@@ -217,8 +219,20 @@ public class DBController {
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
 	 * @throws ParseException 
 	 */
-	public static void insertEmp(String empName, String gender, String birthday, String deptId)
+	public static void insertEmp()
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
+		// 登録する値を入力 修正-別所
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Employee employee = new Employee();
+		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
+		employee.setEmpName(br.readLine());
+		System.out.print(ConstantMsg.GUIDANCE_GENDER);
+		employee.setGender(Integer.parseInt(br.readLine()));
+		System.out.print(ConstantMsg.GUIDANCE_BIRTHDAY);
+		employee.setBirthday(br.readLine());
+		System.out.print(ConstantMsg.GUIDANCE_DEPT_ID);
+		employee.getDepartment().setDeptId(Integer.parseInt(br.readLine()));
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -226,12 +240,12 @@ public class DBController {
 			connection = DBManager.getConnection();
 			// ステートメントを作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
-			// 入力値をバインド
-			preparedStatement.setString(1, empName);
-			preparedStatement.setInt(2, Integer.parseInt(gender));
+			// 入力値をバインド 修正-別所
+			preparedStatement.setString(1, employee.getEmpName());
+			preparedStatement.setInt(2, employee.getGender());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
-			preparedStatement.setInt(4, Integer.parseInt(deptId));
+			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
+			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
 			// SQL文を実行
 			preparedStatement.executeUpdate();
 
@@ -254,7 +268,7 @@ public class DBController {
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
 	 * @throws ParseException 
 	 */
-	public static void updateByEmpId(String empId)
+	public static void updateByEmpId()
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -269,7 +283,8 @@ public class DBController {
 			//修正-別所
 			Employee employee = new Employee();
 			//社員IDを代入
-			employee.setEmpId(Integer.parseInt(empId));
+			System.out.print(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID);
+			employee.setEmpId(Integer.parseInt(br.readLine()));
 			//名前を代入
 			System.out.print(ConstantMsg.INPUT_INSERT_EMP_NAME);
 			employee.setEmpName(br.readLine());
