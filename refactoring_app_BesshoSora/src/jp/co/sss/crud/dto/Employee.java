@@ -19,7 +19,12 @@ public class Employee {
 		return empName;
 	}
 
-	public String getGender() {
+	public int getGender() {
+		return gender;
+	}
+
+	//性別を文字列で返す
+	public String getGenderString() {
 		//性別の文字化
 		String genderString = "";
 		if (this.gender == 0) {

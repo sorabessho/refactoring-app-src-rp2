@@ -285,7 +285,7 @@ public class DBController {
 
 			// 入力値をバインド 修正-別所
 			preparedStatement.setString(1, employee.getEmpName());
-			preparedStatement.setInt(2, Integer.parseInt(employee.getGender()));
+			preparedStatement.setInt(2, employee.getGender());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
 			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
