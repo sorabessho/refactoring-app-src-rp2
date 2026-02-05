@@ -266,26 +266,30 @@ public class DBController {
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
 
-			System.out.print("社員名：");
-			String emp_name = br.readLine();
-			// 性別を入力
-			System.out.print("性別(0:回答しない, 1:男性, 2:女性, 9:その他):");
-			String gender = br.readLine();
-			// 誕生日を入力
-			System.out.print("生年月日(西暦年/月/日)：");
-			String birthday = br.readLine();
+			//修正-別所
+			Employee employee = new Employee();
+			//社員IDを代入
+			employee.setEmpId(Integer.parseInt(empId));
+			//名前を代入
+			System.out.print(ConstantMsg.INPUT_INSERT_EMP_NAME);
+			employee.setEmpName(br.readLine());
+			// 性別を代入
+			System.out.print(ConstantMsg.INPUT_INSERT_GENDER);
+			employee.setGender(Integer.parseInt(br.readLine()));
+			// 誕生日を代入
+			System.out.print(ConstantMsg.INPUT_INSERT_BIRTHDAY);
+			employee.setBirthday(br.readLine());
+			// 部署IDを代入
+			System.out.print(ConstantMsg.INPUT_INSERT_DEPT_ID);
+			employee.getDepartment().setDeptId(Integer.parseInt(br.readLine()));
 
-			// 部署IDを入力
-			System.out.print("部署ID(1：営業部、2：経理部、3：総務部)：");
-			String deptId = br.readLine();
-
-			// 入力値をバインド
-			preparedStatement.setString(1, emp_name);
-			preparedStatement.setInt(2, Integer.parseInt(gender));
+			// 入力値をバインド 修正-別所
+			preparedStatement.setString(1, employee.getEmpName());
+			preparedStatement.setInt(2, Integer.parseInt(employee.getGender()));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
-			preparedStatement.setInt(4, Integer.parseInt(deptId));
-			preparedStatement.setInt(5, Integer.parseInt(empId));
+			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
+			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
+			preparedStatement.setInt(5, employee.getEmpId());
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
 
