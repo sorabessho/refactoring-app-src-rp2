@@ -29,13 +29,7 @@ public class MainSystem {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int menuNo = 0;
-		//使用する変数を宣言
-		String empId;
-		String deptId;
-		String empName;
-		String gender;
-		String birthday;
+		int menuNo = ConstantValue.MENU_NUMBER_0;
 
 		do {
 			// メニューの表示
@@ -70,37 +64,19 @@ public class MainSystem {
 			case ConstantValue.MENU_NUMBER_3:
 				// 検索する部署IDを入力
 				System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
-				deptId = br.readLine();
 
 				// 検索機能の呼出
-				DBController.findByDeptId(deptId);
+				DBController.findByDeptId();
 				break;
 
 			case ConstantValue.MENU_NUMBER_4:
-				// 登録する値を入力
-				System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
-				empName = br.readLine();
-				System.out.print(ConstantMsg.GUIDANCE_GENDER);
-				gender = br.readLine();
-				System.out.print(ConstantMsg.GUIDANCE_BIRTHDAY);
-				birthday = br.readLine();
-				System.out.print(ConstantMsg.GUIDANCE_DEPT_ID);
-				deptId = br.readLine();
-
 				// 登録機能の呼出
-				DBController.insertEmp(empName, gender, birthday, deptId);
+				DBController.insertEmp();
 				break;
 
 			case ConstantValue.MENU_NUMBER_5:
-				// 更新する社員IDを入力
-				System.out.print(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID);
-
-				// 更新する値を入力する
-				empId = br.readLine();
-				Integer.parseInt(empId);
-
 				// 更新機能の呼出
-				DBController.updateByEmpId(empId);
+				DBController.updateByEmpId();
 				break;
 
 			case ConstantValue.MENU_NUMBER_6:
