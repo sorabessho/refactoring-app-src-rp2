@@ -9,6 +9,10 @@ import jp.co.sss.crud.util.ConstantMsg;
 
 public class EmployeeAllFindService {
 
+	/**インスタンス化の禁止*/
+	private EmployeeAllFindService() {
+	}
+
 	/**
 	 * 全ての社員情報を検索
 	 * 
