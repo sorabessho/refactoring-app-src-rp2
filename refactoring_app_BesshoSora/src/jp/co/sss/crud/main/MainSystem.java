@@ -1,11 +1,10 @@
 package jp.co.sss.crud.main;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import jp.co.sss.crud.io.MenuNoReader;
 import jp.co.sss.crud.service.EmployeeAllFindService;
 import jp.co.sss.crud.service.EmployeeDeleteService;
 import jp.co.sss.crud.service.EmployeeFindByDeptIdService;
@@ -26,14 +25,14 @@ public class MainSystem {
 	/**
 	 * 社員管理システムを起動
 	 *
-	 * @throws IOException 
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
+	 * @throws IOException 
+	 * @throws NumberFormatException 
 	 */
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+	public static void main(String[] args)
+			throws ClassNotFoundException, SQLException, ParseException, NumberFormatException, IOException {
 		int menuNo = ConstantValue.MENU_NUMBER_0;
 
 		do {
@@ -49,7 +48,7 @@ public class MainSystem {
 			System.out.print(ConstantMsg.MENU_INPUT_NUMBER);
 
 			// メニュー番号の入力
-			menuNo = Integer.parseInt(br.readLine());
+			menuNo = MenuNoReader.menuNoReader();
 
 			// 機能の呼出
 			switch (menuNo) {

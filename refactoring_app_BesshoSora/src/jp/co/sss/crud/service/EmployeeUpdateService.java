@@ -1,13 +1,16 @@
 package jp.co.sss.crud.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.ParseException;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.EmployeeBirthdayReader;
+import jp.co.sss.crud.io.EmployeeDeptIdReader;
+import jp.co.sss.crud.io.EmployeeEmpIdReader;
+import jp.co.sss.crud.io.EmployeeGenderReader;
+import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
 public class EmployeeUpdateService {
@@ -28,20 +31,19 @@ public class EmployeeUpdateService {
 	 */
 	public static void updateByEmpId()
 			throws NumberFormatException, IOException, ClassNotFoundException, SQLException, ParseException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		//更新する値を入力
 		Employee employee = new Employee();
 		System.out.print(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID);
-		employee.setEmpId(Integer.parseInt(br.readLine()));
+		employee.setEmpId(EmployeeEmpIdReader.employeeEmpIdReader());
 		System.out.print(ConstantMsg.INPUT_INSERT_EMP_NAME);
-		employee.setEmpName(br.readLine());
+		employee.setEmpName(EmployeeNameReader.employeeNameReader());
 		System.out.print(ConstantMsg.INPUT_INSERT_GENDER);
-		employee.setGender(Integer.parseInt(br.readLine()));
+		employee.setGender(EmployeeGenderReader.employeeGenderReader());
 		System.out.print(ConstantMsg.INPUT_INSERT_BIRTHDAY);
-		employee.setBirthday(br.readLine());
+		employee.setBirthday(EmployeeBirthdayReader.employeeBirthdayReader());
 		System.out.print(ConstantMsg.INPUT_INSERT_DEPT_ID);
-		employee.getDepartment().setDeptId(Integer.parseInt(br.readLine()));
+		employee.getDepartment().setDeptId(EmployeeDeptIdReader.employeeDeptIdReader());
 
 		//機能の呼出
 		int result = EmployeeDAO.updateByEmpIdDAO(employee);

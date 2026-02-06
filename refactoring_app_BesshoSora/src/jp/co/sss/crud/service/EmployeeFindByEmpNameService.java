@@ -1,13 +1,12 @@
 package jp.co.sss.crud.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
 public class EmployeeFindByEmpNameService {
@@ -25,11 +24,10 @@ public class EmployeeFindByEmpNameService {
 	 * @throws IOException 入力処理でエラーが発生した場合に送出
 	 */
 	public static void findByEmpName() throws ClassNotFoundException, SQLException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		//社員名入力
 		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
-		String empName = br.readLine();
+		String empName = EmployeeNameReader.employeeNameReader();
 
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findByEmpNameDAO(empName);

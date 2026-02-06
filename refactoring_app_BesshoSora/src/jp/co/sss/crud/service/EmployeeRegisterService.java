@@ -1,13 +1,15 @@
 package jp.co.sss.crud.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.ParseException;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.EmployeeBirthdayReader;
+import jp.co.sss.crud.io.EmployeeDeptIdReader;
+import jp.co.sss.crud.io.EmployeeGenderReader;
+import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
 public class EmployeeRegisterService {
@@ -26,18 +28,17 @@ public class EmployeeRegisterService {
 	 * @throws ParseException 形式処理でエラーが発生した場合に送出
 	 */
 	public static void registEmp() throws IOException, ClassNotFoundException, SQLException, ParseException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		//登録する値を入力
 		Employee employee = new Employee();
 		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
-		employee.setEmpName(br.readLine());
+		employee.setEmpName(EmployeeNameReader.employeeNameReader());
 		System.out.print(ConstantMsg.GUIDANCE_GENDER);
-		employee.setGender(Integer.parseInt(br.readLine()));
+		employee.setGender(EmployeeGenderReader.employeeGenderReader());
 		System.out.print(ConstantMsg.GUIDANCE_BIRTHDAY);
-		employee.setBirthday(br.readLine());
+		employee.setBirthday(EmployeeBirthdayReader.employeeBirthdayReader());
 		System.out.print(ConstantMsg.GUIDANCE_DEPT_ID);
-		employee.getDepartment().setDeptId(Integer.parseInt(br.readLine()));
+		employee.getDepartment().setDeptId(EmployeeDeptIdReader.employeeDeptIdReader());
 
 		//機能の呼出
 		int result = EmployeeDAO.registEmpDAO(employee);

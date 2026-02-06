@@ -1,11 +1,10 @@
 package jp.co.sss.crud.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 import jp.co.sss.crud.db.EmployeeDAO;
+import jp.co.sss.crud.io.EmployeeEmpIdReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
 public class EmployeeDeleteService {
@@ -24,11 +23,10 @@ public class EmployeeDeleteService {
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static void deleteByEmpId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		// 削除する社員IDを入力
 		System.out.print(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
-		int empId = Integer.parseInt(br.readLine());
+		int empId = EmployeeEmpIdReader.employeeEmpIdReader();
 
 		//機能の呼出
 		int result = EmployeeDAO.deleteByEmpIdDAO(empId);

@@ -1,13 +1,12 @@
 package jp.co.sss.crud.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.EmployeeDeptIdReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
 public class EmployeeFindByDeptIdService {
@@ -26,11 +25,10 @@ public class EmployeeFindByDeptIdService {
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static void findByDeptId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		// 検索する部署IDを入力
 		System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
-		int deptId = Integer.parseInt(br.readLine());
+		int deptId = EmployeeDeptIdReader.employeeDeptIdReader();
 
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findByDeptIdDAO(deptId);
