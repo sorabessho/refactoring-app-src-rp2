@@ -1,5 +1,51 @@
 package jp.co.sss.crud.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.util.List;
+
+import jp.co.sss.crud.db.EmployeeDAO;
+import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.util.ConstantMsg;
+
 public class EmployeeFindByDeptIdService {
 
+	/**インスタンス化の禁止*/
+	private EmployeeFindByDeptIdService() {
+	}
+
+	/**
+	 * 部署IDに該当する社員情報を検索
+	 * 
+	 * @author 別所大空
+	 * @throws NumberFormatException 文字列を数値に変換する際にエラーが発生した場合に送出
+	 * @throws IOException 入力処理でエラーが発生した場合に送出
+	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
+	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 */
+	public static void findByDeptId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		// 検索する部署IDを入力
+		System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
+		int deptId = Integer.parseInt(br.readLine());
+
+		//機能の呼出
+		List<Employee> employees = EmployeeDAO.findByDeptIdDAO(deptId);
+
+		//nullチェック
+		if (employees == null) {
+			System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
+			return;
+		}
+
+		//従業員のコンソール出力
+		System.out.println(ConstantMsg.HEADER_FIND_RESULT);
+		for (Employee employee : employees) {
+			System.out.println(employee);
+		}
+
+	}
 }
