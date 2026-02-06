@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import jp.co.sss.crud.db.EmployeeDAO;
+import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeEmpIdReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
@@ -31,13 +32,7 @@ public class EmployeeDeleteService {
 		//機能の呼出
 		int result = EmployeeDAO.deleteByEmpIdDAO(empId);
 
-		//処理完遂チェック（失敗の場合-result == 0）
-		if (result == 0) {
-			//更新失敗メッセージ
-			System.out.println(ConstantMsg.NOTICE_FAILED);
-		} else {
-			//更新完了メッセージ
-			System.out.println(ConstantMsg.NOTICE_DELETE_COMPLETE);
-		}
+		//処理完遂通知
+		ConsoleWriter.checkCompleteConsoleWriter(result);
 	}
 }

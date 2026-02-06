@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeBirthdayReader;
 import jp.co.sss.crud.io.EmployeeDeptIdReader;
 import jp.co.sss.crud.io.EmployeeGenderReader;
@@ -43,15 +44,7 @@ public class EmployeeRegisterService {
 		//機能の呼出
 		int result = EmployeeDAO.registEmpDAO(employee);
 
-		//処理完遂チェック（失敗の場合-result == 0）
-		if (result == 0) {
-			//登録失敗メッセージ
-			System.out.println(ConstantMsg.NOTICE_FAILED);
-		} else {
-			// 登録完了メッセージ
-			System.out.println(ConstantMsg.NOTICE_INSERT_COMPLETE);
-
-		}
-
+		//処理完遂通知
+		ConsoleWriter.checkCompleteConsoleWriter(result);
 	}
 }

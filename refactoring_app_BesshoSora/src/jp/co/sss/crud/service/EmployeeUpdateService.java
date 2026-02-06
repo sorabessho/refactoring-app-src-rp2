@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeBirthdayReader;
 import jp.co.sss.crud.io.EmployeeDeptIdReader;
 import jp.co.sss.crud.io.EmployeeEmpIdReader;
@@ -48,13 +49,7 @@ public class EmployeeUpdateService {
 		//機能の呼出
 		int result = EmployeeDAO.updateByEmpIdDAO(employee);
 
-		//処理完遂チェック（失敗の場合-result == 0）
-		if (result == 0) {
-			//更新失敗メッセージ
-			System.out.println(ConstantMsg.NOTICE_FAILED);
-		} else {
-			//更新完了メッセージ
-			System.out.println(ConstantMsg.NOTICE_UPDATE_BY_EMP_ID_COMPLETE);
-		}
+		//処理完遂通知
+		ConsoleWriter.checkCompleteConsoleWriter(result);
 	}
 }
