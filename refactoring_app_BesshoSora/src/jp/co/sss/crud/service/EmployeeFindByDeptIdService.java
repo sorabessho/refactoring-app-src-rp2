@@ -32,8 +32,7 @@ public class EmployeeFindByDeptIdService {
 	 */
 	public static void findByDeptId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
 		// 検索する部署IDを入力
-		System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
-		int deptId = EmployeeDeptIdReader.employeeDeptIdReader();
+		int deptId = EmployeeDeptIdReader.employeeDeptIdReader(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
 
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findByDeptIdDAO(deptId);

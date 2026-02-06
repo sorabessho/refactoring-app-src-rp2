@@ -8,7 +8,6 @@ import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
 import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeNameReader;
-import jp.co.sss.crud.util.ConstantMsg;
 
 /**
  * 社員名検索のサービスクラス
@@ -31,7 +30,6 @@ public class EmployeeFindByEmpNameService {
 	 */
 	public static void findByEmpName() throws ClassNotFoundException, SQLException, IOException {
 		//社員名入力
-		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 		String empName = EmployeeNameReader.employeeNameReader();
 
 		//機能の呼出

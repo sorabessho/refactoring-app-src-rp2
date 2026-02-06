@@ -30,8 +30,7 @@ public class EmployeeDeleteService {
 	 */
 	public static void deleteByEmpId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
 		// 削除する社員IDを入力
-		System.out.print(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
-		int empId = EmployeeEmpIdReader.employeeEmpIdReader();
+		int empId = EmployeeEmpIdReader.employeeEmpIdReader(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
 
 		//機能の呼出
 		int result = EmployeeDAO.deleteByEmpIdDAO(empId);

@@ -11,7 +11,6 @@ import jp.co.sss.crud.io.EmployeeBirthdayReader;
 import jp.co.sss.crud.io.EmployeeDeptIdReader;
 import jp.co.sss.crud.io.EmployeeGenderReader;
 import jp.co.sss.crud.io.EmployeeNameReader;
-import jp.co.sss.crud.util.ConstantMsg;
 
 /**
  * 社員登録のサービスクラス
@@ -36,13 +35,9 @@ public class EmployeeRegisterService {
 	public static void registEmp() throws IOException, ClassNotFoundException, SQLException, ParseException {
 		//登録する値を入力
 		Employee employee = new Employee();
-		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 		employee.setEmpName(EmployeeNameReader.employeeNameReader());
-		System.out.print(ConstantMsg.GUIDANCE_GENDER);
 		employee.setGender(EmployeeGenderReader.employeeGenderReader());
-		System.out.print(ConstantMsg.GUIDANCE_BIRTHDAY);
 		employee.setBirthday(EmployeeBirthdayReader.employeeBirthdayReader());
-		System.out.print(ConstantMsg.GUIDANCE_DEPT_ID);
 		employee.getDepartment().setDeptId(EmployeeDeptIdReader.employeeDeptIdReader());
 
 		//機能の呼出

@@ -39,15 +39,10 @@ public class EmployeeUpdateService {
 			throws NumberFormatException, IOException, ClassNotFoundException, SQLException, ParseException {
 		//更新する値を入力
 		Employee employee = new Employee();
-		System.out.print(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID);
-		employee.setEmpId(EmployeeEmpIdReader.employeeEmpIdReader());
-		System.out.print(ConstantMsg.INPUT_INSERT_EMP_NAME);
+		employee.setEmpId(EmployeeEmpIdReader.employeeEmpIdReader(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID));
 		employee.setEmpName(EmployeeNameReader.employeeNameReader());
-		System.out.print(ConstantMsg.INPUT_INSERT_GENDER);
 		employee.setGender(EmployeeGenderReader.employeeGenderReader());
-		System.out.print(ConstantMsg.INPUT_INSERT_BIRTHDAY);
 		employee.setBirthday(EmployeeBirthdayReader.employeeBirthdayReader());
-		System.out.print(ConstantMsg.INPUT_INSERT_DEPT_ID);
 		employee.getDepartment().setDeptId(EmployeeDeptIdReader.employeeDeptIdReader());
 
 		//機能の呼出
