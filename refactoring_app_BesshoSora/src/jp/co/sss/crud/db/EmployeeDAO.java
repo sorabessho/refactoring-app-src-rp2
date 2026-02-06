@@ -212,13 +212,52 @@ public class EmployeeDAO {
 			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
 			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
 
-			// SQL文を実行 登録できなかった場合-戻り値0
+			// SQL文を実行(失敗時は戻り値0)
 			int result = preparedStatement.executeUpdate();
 
 			return result;
 
 		} finally {
 			// Statementをクローズ
+			DBManager.close(preparedStatement);
+			// DBとの接続を切断
+			DBManager.close(connection);
+		}
+	}
+
+	/**
+	 * <DB操作>社員情報を1件更新
+	 * 
+	 * @param employee 社員情報
+	 * @return 0(登録が出来なかった場合) OR 登録件数(登録が出来た場合)
+	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
+	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws ParseException 形式処理でエラーが発生した場合に送出
+	 */
+	public static int updateByEmpIdDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			// データベースに接続
+			connection = DBManager.getConnection();
+			// ステートメントの作成
+			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
+			// 入力値をバインド 修正-別所
+			preparedStatement.setString(1, employee.getEmpName());
+			preparedStatement.setInt(2, employee.getGender());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
+			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
+			preparedStatement.setInt(5, employee.getEmpId());
+
+			// SQL文の実行(失敗時は戻り値0)
+			int result = preparedStatement.executeUpdate();
+
+			return result;
+
+		} finally {
+			// クローズ処理
 			DBManager.close(preparedStatement);
 			// DBとの接続を切断
 			DBManager.close(connection);
