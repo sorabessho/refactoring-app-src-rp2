@@ -55,6 +55,8 @@ public final class ConstantMsg {
 	public static final String NOTICE_FINISH = "システムを終了します。";
 	/**検索結果が0だった場合の通知*/
 	public static final String NOTICE_FIND_COMPLETE_ANYONE = "該当者はいませんでした";
+	/**登録、更新、削除処理の失敗時*/
+	public static final String NOTICE_FAILED = "処理が実行できませんでした。";
 
 	/**検索結果の目次*/
 	public static final String HEADER_FIND_RESULT = "社員ID\t社員名\t性別\t生年月日\t部署名";
