@@ -37,6 +37,7 @@ public class EmployeeFindByEmpNameService {
 		//nullチェック
 		if (employees == null) {
 			System.out.println(ConstantMsg.NOTICE_FIND_COMPLETE_ANYONE);
+			return;
 		}
 
 		//従業員のコンソール出力
