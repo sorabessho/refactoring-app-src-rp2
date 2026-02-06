@@ -6,7 +6,12 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import jp.co.sss.crud.db.DBController;
+import jp.co.sss.crud.service.EmployeeAllFindService;
+import jp.co.sss.crud.service.EmployeeDeleteService;
+import jp.co.sss.crud.service.EmployeeFindByDeptIdService;
+import jp.co.sss.crud.service.EmployeeFindByEmpNameService;
+import jp.co.sss.crud.service.EmployeeRegisterService;
+import jp.co.sss.crud.service.EmployeeUpdateService;
 import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantValue;
 
@@ -51,32 +56,32 @@ public class MainSystem {
 
 			//全件検索
 			case ConstantValue.MENU_NUMBER_1:
-				DBController.findAll();
+				EmployeeAllFindService.findAll();
 				break;
 
 			// 社員名検索
 			case ConstantValue.MENU_NUMBER_2:
-				DBController.findByEmpName();
+				EmployeeFindByEmpNameService.findByEmpName();
 				break;
 
 			//部署ID検索
 			case ConstantValue.MENU_NUMBER_3:
-				DBController.findByDeptId();
+				EmployeeFindByDeptIdService.findByDeptId();
 				break;
 
 			//社員登録
 			case ConstantValue.MENU_NUMBER_4:
-				DBController.registEmp();
+				EmployeeRegisterService.registEmp();
 				break;
 
 			//社員情報更新
 			case ConstantValue.MENU_NUMBER_5:
-				DBController.updateByEmpId();
+				EmployeeUpdateService.updateByEmpId();
 				break;
 
 			//社員削除
 			case ConstantValue.MENU_NUMBER_6:
-				DBController.deleteByEmpId();
+				EmployeeDeleteService.deleteByEmpId();
 				break;
 
 			}

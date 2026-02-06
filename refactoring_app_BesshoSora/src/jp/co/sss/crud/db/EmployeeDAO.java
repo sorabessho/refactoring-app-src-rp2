@@ -194,7 +194,7 @@ public class EmployeeDAO {
 	 * @return 0(登録が出来なかった場合) OR 登録件数(登録が出来た場合)
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
-	 * @throws ParseException 形式処理でエラーが発生した場合に送出(String→Integer)
+	 * @throws ParseException 形式処理でエラーが発生した場合に送出
 	 */
 	public static int registEmpDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
 		Connection connection = null;
