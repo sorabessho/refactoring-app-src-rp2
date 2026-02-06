@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.MenuNoReader;
 import jp.co.sss.crud.service.EmployeeAllFindService;
 import jp.co.sss.crud.service.EmployeeDeleteService;
@@ -37,15 +38,7 @@ public class MainSystem {
 
 		do {
 			// メニューの表示
-			System.out.println(ConstantMsg.MENU_TITLE);
-			System.out.println(ConstantValue.MENU_NUMBER_1 + ConstantMsg.MENU_FIND_ALL);
-			System.out.println(ConstantValue.MENU_NUMBER_2 + ConstantMsg.MENU_FIND_BY_EMP_NAME);
-			System.out.println(ConstantValue.MENU_NUMBER_3 + ConstantMsg.MENU_FIND_BY_DEPT_ID);
-			System.out.println(ConstantValue.MENU_NUMBER_4 + ConstantMsg.MENU_INSERT_EMP);
-			System.out.println(ConstantValue.MENU_NUMBER_5 + ConstantMsg.MENU_UPDATE_EMP_BY_EMP_ID);
-			System.out.println(ConstantValue.MENU_NUMBER_6 + ConstantMsg.MENU_DELETE_BY_EMP_ID);
-			System.out.println(ConstantValue.MENU_NUMBER_7 + ConstantMsg.MENU_FINISH);
-			System.out.print(ConstantMsg.MENU_INPUT_NUMBER);
+			ConsoleWriter.showMenu();
 
 			// メニュー番号の入力
 			menuNo = MenuNoReader.menuNoReader();
@@ -85,6 +78,7 @@ public class MainSystem {
 
 			}
 		} while (menuNo != ConstantValue.MENU_NUMBER_7);
+		//システム終了メッセージ
 		System.out.println(ConstantMsg.NOTICE_FINISH);
 	}
 }
