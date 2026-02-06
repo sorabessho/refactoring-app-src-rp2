@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +28,9 @@ public class EmployeeDAO {
 	 * <DB操作>全ての社員情報を検索し結果を返す
 	 * 
 	 * @author 別所大空
-	 * @return List<Employee>（検索結果がある場合） OR null（検索結果がない場合）
+	 * @return List<Employee>(検索結果がある場合) OR null(検索結果がない場合)
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException            DB処理でエラーが発生した場合に送出
+	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static List<Employee> findAllDAO() throws ClassNotFoundException, SQLException {
 		Connection connection = null;
@@ -39,6 +42,7 @@ public class EmployeeDAO {
 			connection = DBManager.getConnection();
 			// ステートメントを作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_ALL_SELECT);
+
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
@@ -75,9 +79,9 @@ public class EmployeeDAO {
 	 * 
 	 * @author 別所大空
 	 * @param empName 社員名
-	 * @return List<Employee>（検索結果がある場合） OR null（検索結果がない場合）
+	 * @return List<Employee>(検索結果がある場合) OR null(検索結果がない場合)
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException            DB処理でエラーが発生した場合に送出
+	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static List<Employee> findByEmpIdDAO(int empName) throws ClassNotFoundException, SQLException {
 		Connection connection = null;
@@ -94,6 +98,7 @@ public class EmployeeDAO {
 			preparedStatement = connection.prepareStatement(sql.toString());
 			// 検索条件となる値をバインド
 			preparedStatement.setString(1, "%" + empName + "%");
+
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
@@ -130,9 +135,9 @@ public class EmployeeDAO {
 	 * 
 	 * @author 別所大空
 	 * @param deptId 部署ID
-	 * @return List<Employee>（検索結果がある場合） OR null（検索結果がない場合）
+	 * @return List<Employee>(検索結果がある場合) OR null(検索結果がない場合)
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException            DB処理でエラーが発生した場合に送出
+	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static List<Employee> findByDeptIdDAO(int deptId) throws ClassNotFoundException, SQLException {
 		Connection connection = null;
@@ -149,6 +154,7 @@ public class EmployeeDAO {
 			preparedStatement = connection.prepareStatement(sql.toString());
 			// 検索条件となる値をバインド
 			preparedStatement.setInt(1, deptId);
+
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
 
@@ -173,6 +179,45 @@ public class EmployeeDAO {
 		} finally {
 			// クローズ処理
 			DBManager.close(resultSet);
+			// Statementをクローズ
+			DBManager.close(preparedStatement);
+			// DBとの接続を切断
+			DBManager.close(connection);
+		}
+	}
+
+	/**
+	 * <DB操作>社員情報を1件登録
+	 * 
+	 * @author 別所大空
+	 * @param employee 社員情報
+	 * @return 0(登録が出来なかった場合) OR 登録件数(登録が出来た場合)
+	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
+	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws ParseException 形式処理でエラーが発生した場合に送出
+	 */
+	public static int insertEmpDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			// DBに接続
+			connection = DBManager.getConnection();
+			// ステートメントを作成
+			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
+			// 入力値をバインド
+			preparedStatement.setString(1, employee.getEmpName());
+			preparedStatement.setInt(2, employee.getGender());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
+			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
+
+			// SQL文を実行 登録できなかった場合-戻り値0
+			int result = preparedStatement.executeUpdate();
+
+			return result;
+
+		} finally {
 			// Statementをクローズ
 			DBManager.close(preparedStatement);
 			// DBとの接続を切断
