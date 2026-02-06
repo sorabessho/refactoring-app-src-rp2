@@ -10,6 +10,11 @@ import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * 社員名検索のサービスクラス
+ * 
+ * @author 別所大空
+ */
 public class EmployeeFindByEmpNameService {
 
 	/**インスタンス化の禁止*/
@@ -25,7 +30,6 @@ public class EmployeeFindByEmpNameService {
 	 * @throws IOException 入力処理でエラーが発生した場合に送出
 	 */
 	public static void findByEmpName() throws ClassNotFoundException, SQLException, IOException {
-
 		//社員名入力
 		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
 		String empName = EmployeeNameReader.employeeNameReader();

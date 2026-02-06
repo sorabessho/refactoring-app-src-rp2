@@ -14,6 +14,11 @@ import jp.co.sss.crud.io.EmployeeGenderReader;
 import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * 社員更新のサービスクラス
+ * 
+ * @author 別所大空
+ */
 public class EmployeeUpdateService {
 
 	/**インスタンス化の禁止*/
@@ -32,7 +37,6 @@ public class EmployeeUpdateService {
 	 */
 	public static void updateByEmpId()
 			throws NumberFormatException, IOException, ClassNotFoundException, SQLException, ParseException {
-
 		//更新する値を入力
 		Employee employee = new Employee();
 		System.out.print(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID);

@@ -13,6 +13,11 @@ import jp.co.sss.crud.io.EmployeeGenderReader;
 import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * 社員登録のサービスクラス
+ * 
+ * @author 別所大空
+ */
 public class EmployeeRegisterService {
 
 	/**インスタンス化の禁止*/
@@ -29,7 +34,6 @@ public class EmployeeRegisterService {
 	 * @throws ParseException 形式処理でエラーが発生した場合に送出
 	 */
 	public static void registEmp() throws IOException, ClassNotFoundException, SQLException, ParseException {
-
 		//登録する値を入力
 		Employee employee = new Employee();
 		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);

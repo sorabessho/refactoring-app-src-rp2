@@ -7,6 +7,11 @@ import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
 import jp.co.sss.crud.io.ConsoleWriter;
 
+/**
+ * 全件検索のサービスクラス
+ * 
+ * @author 別所大空
+ */
 public class EmployeeAllFindService {
 
 	/**インスタンス化の禁止*/
@@ -21,7 +26,6 @@ public class EmployeeAllFindService {
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static void findAll() throws ClassNotFoundException, SQLException {
-
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findAllDAO();
 

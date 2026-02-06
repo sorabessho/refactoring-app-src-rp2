@@ -8,6 +8,11 @@ import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeEmpIdReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * 社員削除のサービスクラス
+ * 
+ * @author 別所大空
+ */
 public class EmployeeDeleteService {
 
 	/**インスタンス化の禁止*/
@@ -24,7 +29,6 @@ public class EmployeeDeleteService {
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static void deleteByEmpId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
-
 		// 削除する社員IDを入力
 		System.out.print(ConstantMsg.GUIDANCE_DELETE_BY_EMP_ID);
 		int empId = EmployeeEmpIdReader.employeeEmpIdReader();

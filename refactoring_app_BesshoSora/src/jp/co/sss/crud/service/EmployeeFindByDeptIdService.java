@@ -10,6 +10,11 @@ import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeDeptIdReader;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * 部署ID検索のサービスクラス
+ * 
+ * @author 別所大空
+ */
 public class EmployeeFindByDeptIdService {
 
 	/**インスタンス化の禁止*/
@@ -26,7 +31,6 @@ public class EmployeeFindByDeptIdService {
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 */
 	public static void findByDeptId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
-
 		// 検索する部署IDを入力
 		System.out.print(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
 		int deptId = EmployeeDeptIdReader.employeeDeptIdReader();
@@ -36,6 +40,5 @@ public class EmployeeFindByDeptIdService {
 
 		//結果出力
 		ConsoleWriter.employeesConsoleWriter(employees);
-
 	}
 }
