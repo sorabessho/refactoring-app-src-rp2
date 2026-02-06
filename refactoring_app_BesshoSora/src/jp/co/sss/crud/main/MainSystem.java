@@ -56,7 +56,7 @@ public class MainSystem {
 
 			// 社員名検索
 			case ConstantValue.MENU_NUMBER_2:
-				DBController.findByEmpId();
+				DBController.findByEmpName();
 				break;
 
 			//部署ID検索
