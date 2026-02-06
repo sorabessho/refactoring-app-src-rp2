@@ -196,7 +196,7 @@ public class EmployeeDAO {
 	 * @throws SQLException DB処理でエラーが発生した場合に送出
 	 * @throws ParseException 形式処理でエラーが発生した場合に送出
 	 */
-	public static int insertEmpDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
+	public static int registEmpDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 

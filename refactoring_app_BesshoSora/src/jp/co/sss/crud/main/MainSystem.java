@@ -66,7 +66,7 @@ public class MainSystem {
 
 			//社員登録
 			case ConstantValue.MENU_NUMBER_4:
-				DBController.insertEmp();
+				DBController.registEmp();
 				break;
 
 			//社員情報更新

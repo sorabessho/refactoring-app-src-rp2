@@ -224,7 +224,7 @@ public class DBController {
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
 	 * @throws ParseException 
 	 */
-	public static void insertEmp()
+	public static void registEmp()
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
