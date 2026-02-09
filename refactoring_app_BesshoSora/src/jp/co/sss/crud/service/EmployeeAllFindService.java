@@ -1,10 +1,10 @@
 package jp.co.sss.crud.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.io.ConsoleWriter;
 
 /**
@@ -22,10 +22,9 @@ public class EmployeeAllFindService {
 	 * 全ての社員情報を検索
 	 * 
 	 * @author 別所大空
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー 
 	 */
-	public static void findAll() throws ClassNotFoundException, SQLException {
+	public static void findAll() throws SystemErrorException {
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findAllDAO();
 

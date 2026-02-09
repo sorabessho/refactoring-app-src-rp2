@@ -1,11 +1,11 @@
 package jp.co.sss.crud.service;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.exception.IllegalInputException;
+import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeDeptIdReader;
 import jp.co.sss.crud.util.ConstantMsg;
@@ -25,12 +25,10 @@ public class EmployeeFindByDeptIdService {
 	 * 部署IDに該当する社員情報を検索
 	 * 
 	 * @author 別所大空
-	 * @throws NumberFormatException 文字列を数値に変換する際にエラーが発生した場合に送出
-	 * @throws IOException 入力処理でエラーが発生した場合に送出
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
+	 * @throws IllegalInputException 不正な入力
 	 */
-	public static void findByDeptId() throws NumberFormatException, IOException, ClassNotFoundException, SQLException {
+	public static void findByDeptId() throws IllegalInputException, SystemErrorException {
 		// 検索する部署IDを入力
 		int deptId = EmployeeDeptIdReader.employeeDeptIdReader(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
 

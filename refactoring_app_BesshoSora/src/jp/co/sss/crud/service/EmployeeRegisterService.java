@@ -1,11 +1,9 @@
 package jp.co.sss.crud.service;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
-
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.exception.IllegalInputException;
+import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeBirthdayReader;
 import jp.co.sss.crud.io.EmployeeDeptIdReader;
@@ -27,12 +25,10 @@ public class EmployeeRegisterService {
 	 * 社員情報を1件登録
 	 * 
 	 * @author 別所大空
-	 * @throws IOException 入力処理でエラーが発生した場合に送出
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
-	 * @throws ParseException 形式処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
+	 * @throws IllegalInputException 不正な入力
 	 */
-	public static void registEmp() throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public static void registEmp() throws SystemErrorException, IllegalInputException {
 		//登録する値を入力
 		Employee employee = new Employee();
 		employee.setEmpName(EmployeeNameReader.employeeNameReader());
@@ -44,6 +40,6 @@ public class EmployeeRegisterService {
 		int result = EmployeeDAO.registEmpDAO(employee);
 
 		//処理完遂通知
-		ConsoleWriter.checkCompleteConsoleWriter(result);
+		ConsoleWriter.checkCompleteRegistConsoleWriter(result);
 	}
 }
