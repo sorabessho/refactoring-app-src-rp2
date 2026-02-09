@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.exception.IllegalInputException;
+import jp.co.sss.crud.exception.SystemErrorException;
+import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
 
 /**
@@ -29,48 +32,51 @@ public class EmployeeDAO {
 	 * 
 	 * @author 別所大空
 	 * @return List<Employee>(検索結果がある場合) OR null(検索結果がない場合)
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
 	 */
-	public static List<Employee> findAllDAO() throws ClassNotFoundException, SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
+	public static List<Employee> findAllDAO() throws SystemErrorException {
 		try {
-			// DBに接続
-			connection = DBManager.getConnection();
-			// ステートメントを作成
-			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_ALL_SELECT);
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
 
-			// SQL文を実行
-			resultSet = preparedStatement.executeQuery();
+			try {
+				// DBに接続
+				connection = DBManager.getConnection();
+				// ステートメントを作成
+				preparedStatement = connection.prepareStatement(ConstantSQL.SQL_ALL_SELECT);
 
-			//結果が無しの場合
-			if (!resultSet.isBeforeFirst()) {
-				return null;
+				// SQL文を実行
+				resultSet = preparedStatement.executeQuery();
+
+				//結果が無しの場合
+				if (!resultSet.isBeforeFirst()) {
+					return null;
+				}
+
+				//検索結果をDTOListに入れる
+				List<Employee> employees = new ArrayList<Employee>();
+				while (resultSet.next()) {
+					Employee employee = new Employee();
+					employee.setEmpId(resultSet.getInt("emp_id"));
+					employee.setEmpName(resultSet.getString("emp_name"));
+					employee.setGender(resultSet.getInt("gender"));
+					employee.setBirthday(resultSet.getString("birthday"));
+					employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
+					employees.add(employee);
+				}
+				return employees;
+
+			} finally {
+				// ResultSetをクローズ
+				DBManager.close(resultSet);
+				// Statementをクローズ
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
 			}
-
-			//検索結果をDTOListに入れる
-			List<Employee> employees = new ArrayList<Employee>();
-			while (resultSet.next()) {
-				Employee employee = new Employee();
-				employee.setEmpId(resultSet.getInt("emp_id"));
-				employee.setEmpName(resultSet.getString("emp_name"));
-				employee.setGender(resultSet.getInt("gender"));
-				employee.setBirthday(resultSet.getString("birthday"));
-				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
-				employees.add(employee);
-			}
-			return employees;
-
-		} finally {
-			// ResultSetをクローズ
-			DBManager.close(resultSet);
-			// Statementをクローズ
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
 		}
 	}
 
@@ -80,53 +86,56 @@ public class EmployeeDAO {
 	 * @author 別所大空
 	 * @param empName 社員名
 	 * @return List<Employee>(検索結果がある場合) OR null(検索結果がない場合)
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
 	 */
-	public static List<Employee> findByEmpNameDAO(String empName) throws ClassNotFoundException, SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
+	public static List<Employee> findByEmpNameDAO(String empName) throws SystemErrorException {
 		try {
-			// DBに接続
-			connection = DBManager.getConnection();
-			// SQL文を準備
-			StringBuffer sql = new StringBuffer(ConstantSQL.SQL_SELECT_BASIC);
-			sql.append(ConstantSQL.SQL_SELECT_BY_EMP_NAME);
-			// ステートメントの作成
-			preparedStatement = connection.prepareStatement(sql.toString());
-			// 検索条件となる値をバインド
-			preparedStatement.setString(1, "%" + empName + "%");
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
 
-			// SQL文を実行
-			resultSet = preparedStatement.executeQuery();
+			try {
+				// DBに接続
+				connection = DBManager.getConnection();
+				// SQL文を準備
+				StringBuffer sql = new StringBuffer(ConstantSQL.SQL_SELECT_BASIC);
+				sql.append(ConstantSQL.SQL_SELECT_BY_EMP_NAME);
+				// ステートメントの作成
+				preparedStatement = connection.prepareStatement(sql.toString());
+				// 検索条件となる値をバインド
+				preparedStatement.setString(1, "%" + empName + "%");
 
-			//結果が無しの場合
-			if (!resultSet.isBeforeFirst()) {
-				return null;
+				// SQL文を実行
+				resultSet = preparedStatement.executeQuery();
+
+				//結果が無しの場合
+				if (!resultSet.isBeforeFirst()) {
+					return null;
+				}
+
+				//検索結果をDTOListに入れる
+				List<Employee> employees = new ArrayList<Employee>();
+				while (resultSet.next()) {
+					Employee employee = new Employee();
+					employee.setEmpId(resultSet.getInt("emp_id"));
+					employee.setEmpName(resultSet.getString("emp_name"));
+					employee.setGender(resultSet.getInt("gender"));
+					employee.setBirthday(resultSet.getString("birthday"));
+					employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
+					employees.add(employee);
+				}
+				return employees;
+
+			} finally {
+				// クローズ処理
+				DBManager.close(resultSet);
+				// Statementをクローズ
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
 			}
-
-			//検索結果をDTOListに入れる
-			List<Employee> employees = new ArrayList<Employee>();
-			while (resultSet.next()) {
-				Employee employee = new Employee();
-				employee.setEmpId(resultSet.getInt("emp_id"));
-				employee.setEmpName(resultSet.getString("emp_name"));
-				employee.setGender(resultSet.getInt("gender"));
-				employee.setBirthday(resultSet.getString("birthday"));
-				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
-				employees.add(employee);
-			}
-			return employees;
-
-		} finally {
-			// クローズ処理
-			DBManager.close(resultSet);
-			// Statementをクローズ
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
 		}
 	}
 
@@ -136,53 +145,56 @@ public class EmployeeDAO {
 	 * @author 別所大空
 	 * @param deptId 部署ID
 	 * @return List<Employee>(検索結果がある場合) OR null(検索結果がない場合)
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
 	 */
-	public static List<Employee> findByDeptIdDAO(int deptId) throws ClassNotFoundException, SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
+	public static List<Employee> findByDeptIdDAO(int deptId) throws SystemErrorException {
 		try {
-			// DBに接続
-			connection = DBManager.getConnection();
-			// SQL文を準備
-			StringBuffer sql = new StringBuffer(ConstantSQL.SQL_SELECT_BASIC);
-			sql.append(ConstantSQL.SQL_SELECT_BY_DEPT_ID);
-			// ステートメントの作成
-			preparedStatement = connection.prepareStatement(sql.toString());
-			// 検索条件となる値をバインド
-			preparedStatement.setInt(1, deptId);
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
 
-			// SQL文を実行
-			resultSet = preparedStatement.executeQuery();
+			try {
+				// DBに接続
+				connection = DBManager.getConnection();
+				// SQL文を準備
+				StringBuffer sql = new StringBuffer(ConstantSQL.SQL_SELECT_BASIC);
+				sql.append(ConstantSQL.SQL_SELECT_BY_DEPT_ID);
+				// ステートメントの作成
+				preparedStatement = connection.prepareStatement(sql.toString());
+				// 検索条件となる値をバインド
+				preparedStatement.setInt(1, deptId);
 
-			//結果が無しの場合
-			if (!resultSet.isBeforeFirst()) {
-				return null;
+				// SQL文を実行
+				resultSet = preparedStatement.executeQuery();
+
+				//結果が無しの場合
+				if (!resultSet.isBeforeFirst()) {
+					return null;
+				}
+
+				//検索結果をDTOListに入れる
+				List<Employee> employees = new ArrayList<Employee>();
+				while (resultSet.next()) {
+					Employee employee = new Employee();
+					employee.setEmpId(resultSet.getInt("emp_id"));
+					employee.setEmpName(resultSet.getString("emp_name"));
+					employee.setGender(resultSet.getInt("gender"));
+					employee.setBirthday(resultSet.getString("birthday"));
+					employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
+					employees.add(employee);
+				}
+				return employees;
+
+			} finally {
+				// クローズ処理
+				DBManager.close(resultSet);
+				// Statementをクローズ
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
 			}
-
-			//検索結果をDTOListに入れる
-			List<Employee> employees = new ArrayList<Employee>();
-			while (resultSet.next()) {
-				Employee employee = new Employee();
-				employee.setEmpId(resultSet.getInt("emp_id"));
-				employee.setEmpName(resultSet.getString("emp_name"));
-				employee.setGender(resultSet.getInt("gender"));
-				employee.setBirthday(resultSet.getString("birthday"));
-				employee.getDepartment().setDeptName(resultSet.getString("dept_name"));
-				employees.add(employee);
-			}
-			return employees;
-
-		} finally {
-			// クローズ処理
-			DBManager.close(resultSet);
-			// Statementをクローズ
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
 		}
 	}
 
@@ -192,36 +204,41 @@ public class EmployeeDAO {
 	 * @author 別所大空
 	 * @param employee 社員情報
 	 * @return 0(登録が出来なかった場合) OR 登録件数(登録が出来た場合)
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
-	 * @throws ParseException 形式処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
+	 * @throws IllegalInputException 不正な入力
 	 */
-	public static int registEmpDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
+	public static int registEmpDAO(Employee employee) throws SystemErrorException, IllegalInputException {
 		try {
-			// DBに接続
-			connection = DBManager.getConnection();
-			// ステートメントを作成
-			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
-			// 入力値をバインド
-			preparedStatement.setString(1, employee.getEmpName());
-			preparedStatement.setInt(2, employee.getGender());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
-			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
 
-			// SQL文を実行(失敗時は戻り値0)
-			int result = preparedStatement.executeUpdate();
+			try {
+				// DBに接続
+				connection = DBManager.getConnection();
+				// ステートメントを作成
+				preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
+				// 入力値をバインド
+				preparedStatement.setString(1, employee.getEmpName());
+				preparedStatement.setInt(2, employee.getGender());
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
+				preparedStatement.setInt(4, employee.getDepartment().getDeptId());
 
-			return result;
+				// SQL文を実行(失敗時は戻り値0)
+				int result = preparedStatement.executeUpdate();
 
-		} finally {
-			// Statementをクローズ
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+				return result;
+
+			} finally {
+				// Statementをクローズ
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
+		} catch (ParseException e) {
+			throw new IllegalInputException(ConstantMsg.MSG_ERROR_ILLEGAL_INPUT_EXCEPTION, e);
 		}
 	}
 
@@ -231,37 +248,42 @@ public class EmployeeDAO {
 	 * @author 別所大空
 	 * @param employee 社員情報
 	 * @return 0(登録が出来なかった場合) OR 登録件数(登録が出来た場合)
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
-	 * @throws ParseException 形式処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
+	 * @throws IllegalInputException 不正な入力
 	 */
-	public static int updateByEmpIdDAO(Employee employee) throws ClassNotFoundException, SQLException, ParseException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
+	public static int updateByEmpIdDAO(Employee employee) throws SystemErrorException, IllegalInputException {
 		try {
-			// データベースに接続
-			connection = DBManager.getConnection();
-			// ステートメントの作成
-			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
-			// 入力値をバインド 修正-別所
-			preparedStatement.setString(1, employee.getEmpName());
-			preparedStatement.setInt(2, employee.getGender());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
-			preparedStatement.setInt(4, employee.getDepartment().getDeptId());
-			preparedStatement.setInt(5, employee.getEmpId());
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
 
-			// SQL文の実行(失敗時は戻り値0)
-			int result = preparedStatement.executeUpdate();
+			try {
+				// データベースに接続
+				connection = DBManager.getConnection();
+				// ステートメントの作成
+				preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
+				// 入力値をバインド 修正-別所
+				preparedStatement.setString(1, employee.getEmpName());
+				preparedStatement.setInt(2, employee.getGender());
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				preparedStatement.setObject(3, sdf.parse(employee.getBirthday()), Types.DATE);
+				preparedStatement.setInt(4, employee.getDepartment().getDeptId());
+				preparedStatement.setInt(5, employee.getEmpId());
 
-			return result;
+				// SQL文の実行(失敗時は戻り値0)
+				int result = preparedStatement.executeUpdate();
 
-		} finally {
-			// クローズ処理
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+				return result;
+
+			} finally {
+				// クローズ処理
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
+		} catch (ParseException e) {
+			throw new IllegalInputException(ConstantMsg.MSG_ERROR_ILLEGAL_INPUT_EXCEPTION, e);
 		}
 	}
 
@@ -271,31 +293,35 @@ public class EmployeeDAO {
 	 * @author 別所大空
 	 * @param empId 社員ID
 	 * @return 0(登録が出来なかった場合) OR 登録件数(登録が出来た場合)
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException システムエラー
 	 */
-	public static int deleteByEmpIdDAO(int empId) throws ClassNotFoundException, SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
+	public static int deleteByEmpIdDAO(int empId) throws SystemErrorException {
 		try {
-			// データベースに接続
-			connection = DBManager.getConnection();
-			// ステートメントの作成
-			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
-			// 社員IDをバインド
-			preparedStatement.setInt(1, empId);
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
 
-			// SQL文の実行(失敗時は戻り値0)
-			int result = preparedStatement.executeUpdate();
+			try {
+				// データベースに接続
+				connection = DBManager.getConnection();
+				// ステートメントの作成
+				preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
+				// 社員IDをバインド
+				preparedStatement.setInt(1, empId);
 
-			return result;
+				// SQL文の実行(失敗時は戻り値0)
+				int result = preparedStatement.executeUpdate();
 
-		} finally {
-			// クローズ処理
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+				return result;
+
+			} finally {
+				// クローズ処理
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
 		}
+
 	}
 }
