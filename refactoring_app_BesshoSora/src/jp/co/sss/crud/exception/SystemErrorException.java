@@ -18,7 +18,17 @@ public class SystemErrorException extends Exception {
 	}
 
 	/**
-	 * 引数ありのスーパークラスを呼び出すコンストラクタ
+	 * 引数(メッセージ)ありのスーパークラスを呼び出すコンストラクタ
+	 * 
+	 * @author 別所大空
+	 * @param message エラーメッセージ
+	 */
+	public SystemErrorException(String message) {
+		super(message);
+	}
+
+	/**
+	 * 引数(メッセージ、原因)ありのスーパークラスを呼び出すコンストラクタ
 	 * 
 	 * @author 別所大空
 	 * @param message エラーメッセージ
