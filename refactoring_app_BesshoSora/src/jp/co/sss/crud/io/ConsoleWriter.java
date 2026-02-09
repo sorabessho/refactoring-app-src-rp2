@@ -28,7 +28,7 @@ public class ConsoleWriter {
 		System.out.println(ConstantValue.MENU_NUMBER_1 + ConstantMsg.MENU_FIND_ALL);
 		System.out.println(ConstantValue.MENU_NUMBER_2 + ConstantMsg.MENU_FIND_BY_EMP_NAME);
 		System.out.println(ConstantValue.MENU_NUMBER_3 + ConstantMsg.MENU_FIND_BY_DEPT_ID);
-		System.out.println(ConstantValue.MENU_NUMBER_4 + ConstantMsg.MENU_INSERT_EMP);
+		System.out.println(ConstantValue.MENU_NUMBER_4 + ConstantMsg.MENU_REGIST_EMP);
 		System.out.println(ConstantValue.MENU_NUMBER_5 + ConstantMsg.MENU_UPDATE_EMP_BY_EMP_ID);
 		System.out.println(ConstantValue.MENU_NUMBER_6 + ConstantMsg.MENU_DELETE_BY_EMP_ID);
 		System.out.println(ConstantValue.MENU_NUMBER_7 + ConstantMsg.MENU_FINISH);
@@ -57,19 +57,53 @@ public class ConsoleWriter {
 	}
 
 	/**
-	 * 登録、更新、削除の際の処理完遂チェック
+	 * 登録の際の処理完遂チェック
 	 * 
 	 * @author 別所大空
-	 * @param result 登録、更新、削除メソッドの戻り値
+	 * @param result 登録メソッドの戻り値
 	 */
-	public static void checkCompleteConsoleWriter(int result) {
+	public static void checkCompleteRegistConsoleWriter(int result) {
 		//処理完遂チェック（失敗の場合-result == 0）
 		if (result == 0) {
 			//登録失敗メッセージ
 			System.out.println(ConstantMsg.NOTICE_FAILED);
 		} else {
 			// 登録完了メッセージ
-			System.out.println(ConstantMsg.NOTICE_INSERT_COMPLETE);
+			System.out.println(ConstantMsg.NOTICE_REGIST_COMPLETE);
+		}
+	}
+
+	/**
+	 * 登録、更新、削除の際の処理完遂チェック
+	 * 
+	 * @author 別所大空
+	 * @param result 更新メソッドの戻り値
+	 */
+	public static void checkCompleteUpdateConsoleWriter(int result) {
+		//処理完遂チェック（失敗の場合-result == 0）
+		if (result == 0) {
+			//登録失敗メッセージ
+			System.out.println(ConstantMsg.NOTICE_FAILED);
+		} else {
+			// 登録完了メッセージ
+			System.out.println(ConstantMsg.NOTICE_UPDATE_BY_EMP_ID_COMPLETE);
+		}
+	}
+
+	/**
+	 * 登録、更新、削除の際の処理完遂チェック
+	 * 
+	 * @author 別所大空
+	 * @param result 削除メソッドの戻り値
+	 */
+	public static void checkCompleteDeleteConsoleWriter(int result) {
+		//処理完遂チェック（失敗の場合-result == 0）
+		if (result == 0) {
+			//登録失敗メッセージ
+			System.out.println(ConstantMsg.NOTICE_FAILED);
+		} else {
+			// 登録完了メッセージ
+			System.out.println(ConstantMsg.NOTICE_DELETE_COMPLETE);
 		}
 	}
 }
