@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 
 /**
@@ -22,12 +23,17 @@ public class EmployeeNameReader {
 	 * 
 	 * @author 別所大空
 	 * @return String 社員名
-	 * @throws IOException 入力処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException	 システムエラー
 	 */
-	public static String employeeNameReader() throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
-		return br.readLine();
+	public static String employeeNameReader() throws SystemErrorException {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			System.out.print(ConstantMsg.GUIDANCE_EMP_NAME);
+			return br.readLine();
+		} catch (IOException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
+		}
+
 	}
 
 	/**
@@ -36,11 +42,16 @@ public class EmployeeNameReader {
 	 * @author 別所大空
 	 * @param message 入力案内メッセージ
 	 * @return String 社員名
-	 * @throws IOException 入力処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException	 システムエラー
 	 */
-	public static String employeeNameReader(String message) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print(message);
-		return br.readLine();
+	public static String employeeNameReader(String message) throws SystemErrorException {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			System.out.print(message);
+			return br.readLine();
+		} catch (IOException e) {
+			throw new SystemErrorException(ConstantMsg.MSG_ERROR_SYSTEM_ERROR_EXCEPTION, e);
+		}
+
 	}
 }
