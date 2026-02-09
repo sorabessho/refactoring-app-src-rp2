@@ -68,4 +68,23 @@ public final class ConstantMsg {
 	/**SystemErrorException.java発生時のエラーメッセージ*/
 	public static final String MSG_ERROR_SYSTEM_ERROR_EXCEPTION = "システムエラーが発生しました。\nシステムを強制終了します。";
 
+	/**整数入力チェックメッセージ*/
+	public static final String MSG_VAILD_MENU_NUMBER = "1以上7以下の整数を入力してください";
+	public static final String MSG_VAILD_EMP_ID = "1以上9999以下の整数を入力してください";
+	public static final String MSG_VAILD_DEPT_ID = "1以上3以下の整数を入力してください";
+	public static final String MSG_VAILD_GENDER = "1,2,3,9の整数を入力してください";
+	/**社員名入力チェック*/
+	public static final String MSG_VAILD_EMP_NAME = "1文字以上30文字以下の文字列を入力してください";
+	/**日付入力チェック*/
+	public static final String MSG_VAILD_DATE = "正しい形式(西暦年/月/日)で日付を入力してください";
+
+	/**正規表現（社員ID）*/
+	public static final String VAILD_PATTERN_EMP_ID = "^[1-9１-９]{1}[0-9１-９]{0,3}$";
+	/**正規表現（部署ID）*/
+	public static final String VAILD_PATTERN_DEPT_ID = "^[1-3１-３]{1}$";
+	/**正規表現（性別）*/
+	public static final String VAILD_PATTERN_GENDER = "^[0129０１２９]{1}$";
+	/**正規表現（日付形式）*/
+	public static final String VAILD_PATTERN_DATE = "uuuu/M/d";
+
 }
