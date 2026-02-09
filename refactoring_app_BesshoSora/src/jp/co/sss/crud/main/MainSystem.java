@@ -34,7 +34,7 @@ public class MainSystem {
 				ConsoleWriter.showMenu();
 
 				// メニュー番号の入力
-				menuNo = MenuNoReader.menuNoReader();
+				menuNo = (int) MenuNoReader.menuNoReader();
 
 				// 機能の呼出
 				switch (menuNo) {

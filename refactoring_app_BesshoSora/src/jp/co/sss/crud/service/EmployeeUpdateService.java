@@ -34,11 +34,11 @@ public class EmployeeUpdateService {
 			throws IllegalInputException, SystemErrorException {
 		//更新する値を入力
 		Employee employee = new Employee();
-		employee.setEmpId(EmployeeEmpIdReader.employeeEmpIdReader(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID));
-		employee.setEmpName(EmployeeNameReader.employeeNameReader());
-		employee.setGender(EmployeeGenderReader.employeeGenderReader());
-		employee.setBirthday(EmployeeBirthdayReader.employeeBirthdayReader());
-		employee.getDepartment().setDeptId(EmployeeDeptIdReader.employeeDeptIdReader());
+		employee.setEmpId((int) EmployeeEmpIdReader.employeeEmpIdReader(ConstantMsg.GUIDANCE_UPDATE_BY_EMP_ID));
+		employee.setEmpName((String) EmployeeNameReader.employeeNameReader());
+		employee.setGender((int) EmployeeGenderReader.employeeGenderReader());
+		employee.setBirthday((String) EmployeeBirthdayReader.employeeBirthdayReader());
+		employee.getDepartment().setDeptId((int) EmployeeDeptIdReader.employeeDeptIdReader());
 
 		//機能の呼出
 		int result = EmployeeDAO.updateByEmpIdDAO(employee);

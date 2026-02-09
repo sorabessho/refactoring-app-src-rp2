@@ -30,7 +30,7 @@ public class EmployeeFindByDeptIdService {
 	 */
 	public static void findByDeptId() throws IllegalInputException, SystemErrorException {
 		// 検索する部署IDを入力
-		int deptId = EmployeeDeptIdReader.employeeDeptIdReader(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
+		int deptId = (int) EmployeeDeptIdReader.employeeDeptIdReader(ConstantMsg.GUIDANCE_FIND_BY_DEPT_ID);
 
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findByDeptIdDAO(deptId);

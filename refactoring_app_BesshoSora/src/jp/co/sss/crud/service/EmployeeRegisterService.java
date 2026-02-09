@@ -31,10 +31,10 @@ public class EmployeeRegisterService {
 	public static void registEmp() throws SystemErrorException, IllegalInputException {
 		//登録する値を入力
 		Employee employee = new Employee();
-		employee.setEmpName(EmployeeNameReader.employeeNameReader());
-		employee.setGender(EmployeeGenderReader.employeeGenderReader());
-		employee.setBirthday(EmployeeBirthdayReader.employeeBirthdayReader());
-		employee.getDepartment().setDeptId(EmployeeDeptIdReader.employeeDeptIdReader());
+		employee.setEmpName((String) EmployeeNameReader.employeeNameReader());
+		employee.setGender((int) EmployeeGenderReader.employeeGenderReader());
+		employee.setBirthday((String) EmployeeBirthdayReader.employeeBirthdayReader());
+		employee.getDepartment().setDeptId((int) EmployeeDeptIdReader.employeeDeptIdReader());
 
 		//機能の呼出
 		int result = EmployeeDAO.registEmpDAO(employee);

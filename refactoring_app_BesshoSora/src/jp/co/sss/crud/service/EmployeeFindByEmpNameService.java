@@ -4,6 +4,7 @@ import java.util.List;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeNameReader;
@@ -24,10 +25,11 @@ public class EmployeeFindByEmpNameService {
 	 * 
 	 * @author 別所大空
 	 * @throws SystemErrorException システムエラー
+	 * @throws IllegalInputException 入力チェック、不正な入力
 	 */
-	public static void findByEmpName() throws SystemErrorException {
+	public static void findByEmpName() throws SystemErrorException, IllegalInputException {
 		//社員名入力
-		String empName = EmployeeNameReader.employeeNameReader();
+		String empName = (String) EmployeeNameReader.employeeNameReader();
 
 		//機能の呼出
 		List<Employee> employees = EmployeeDAO.findByEmpNameDAO(empName);
