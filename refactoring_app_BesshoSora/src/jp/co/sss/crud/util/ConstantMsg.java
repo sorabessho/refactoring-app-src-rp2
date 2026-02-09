@@ -63,4 +63,9 @@ public final class ConstantMsg {
 	/**検索結果の目次*/
 	public static final String HEADER_FIND_RESULT = "社員ID\t社員名\t性別\t生年月日\t部署名";
 
+	/**IllegalInputException.java発生時のエラーメッセージ*/
+	public static final String MSG_ERROR_ILLEGAL_INPUT_EXCEPTION = "不正な入力が行われました。\nやり直してください。";
+	/**SystemErrorException.java発生時のエラーメッセージ*/
+	public static final String MSG_ERROR_SYSTEM_ERROR_EXCEPTION = "システムエラーが発生しました。\nシステムを強制終了します。";
+
 }
