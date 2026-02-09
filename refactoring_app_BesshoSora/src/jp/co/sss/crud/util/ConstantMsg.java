@@ -20,7 +20,7 @@ public final class ConstantMsg {
 	/**メニュー（部署ID検索）*/
 	public static final String MENU_FIND_BY_DEPT_ID = ".部署ID検索";
 	/**メニュー（新規登録）*/
-	public static final String MENU_INSERT_EMP = ".新規登録";
+	public static final String MENU_REGIST_EMP = ".新規登録";
 	/**メニュー（更新）*/
 	public static final String MENU_UPDATE_EMP_BY_EMP_ID = ".更新";
 	/**メニュー（削除）*/
@@ -50,7 +50,7 @@ public final class ConstantMsg {
 	/**更新完了通知*/
 	public static final String NOTICE_UPDATE_BY_EMP_ID_COMPLETE = "社員情報を更新しました";
 	/**登録完了通知*/
-	public static final String NOTICE_INSERT_COMPLETE = "社員情報を登録しました";
+	public static final String NOTICE_REGIST_COMPLETE = "社員情報を登録しました";
 	/**削除完了通知*/
 	public static final String NOTICE_DELETE_COMPLETE = "社員情報を削除しました";
 	/**システム終了通知*/
